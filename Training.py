@@ -42,8 +42,8 @@ print('Arduino connected on USB', port)
 sleep(0.5)
 print('Press button to start recording training data')
 camera = picamera.PiCamera()
-camera.resolution = (600, 400)
-camera.framerate = 10
+camera.resolution = (300, 100)
+camera.framerate = 5
 camera.vflip = True
 
 sleep(2)
@@ -60,6 +60,7 @@ def record_data():
         img_dir.append(current_dir + '/recorded_images/' + '{}.jpg'.format(datetime.now()))
         print("Steering angle: ", incoming_data)
         yield img_dir[i]
+        sleep(0.08)
         i += 1
         ser.reset_input_buffer()
         
