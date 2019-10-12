@@ -98,6 +98,7 @@ while(True):
             with open('img_dir.csv', 'a') as imgdir:
                 csv_writer = csv.writer(imgdir)
                 for i in range(1, len(img_dir)):    #start from 1 because apparently first data steering angle always 0
+                    os.remove(img_dir[0])
                     csv_data = []
                     csv_data.append(img_dir[i])
                     csv_data.append(steering_angles[i])
