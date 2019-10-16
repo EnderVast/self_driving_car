@@ -20,5 +20,5 @@ for frame in camera.capture_continuous(rawCapture, format = "bgr", use_video_por
     rawCapture.truncate(0)
     time.sleep(0.02)
     print("h")
-    if key == ord("q"):
+    if key == ord("q"):s
         break
