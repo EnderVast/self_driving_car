@@ -27,10 +27,11 @@ print('Arduino connected on USB', port)
 while(True):
     
         
-    for i in range (90, 35, -1):
-        print(i)
-        send = str(i) + '\n'
+    for i in range (150, 35, -1):
+        
+        send = str(i*0.01) + '\n'
         send = bytes(send, encoding = 'utf-8')
+        print(send)
         ser.write(send)
         #ser.flush()
         sleep(0.2)

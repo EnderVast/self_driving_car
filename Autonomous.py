@@ -44,19 +44,31 @@ print('Arduino connected on USB', port)
 
 sleep(0.5)
 
-for frame in camera.capture_continuous(rawCapture, format = "bgr", use_video_port = True):
-    image = frame.array
-    key = cv2.waitKey(1) & 0xFF
-    rawCapture.truncate(0)
+def transmit(steering_angle):
+    steering_angle = steering_angle[0, 0]
+    steering_angle = steering_angle * 10000
+    print(steering_angle)
+    steering_angle = str(steering_angle) + '\n'
+    steering_angle = bytes(steering_angle, encoding = 'utf-8')
+    ser.write(steering_angle)
+    
+def preprocess_image(image):
     image = cv2.cvtColor(image, cv2.COLOR_BGR2YUV)
     image = cv2.GaussianBlur(image, (3, 3), 0)
     image = cv2.resize(image, (200, 66))
     cv2.imshow("Frame", image)
     image = image/255
     image = image.reshape(1, 66, 200, 3)
+    return image
+
+for frame in camera.capture_continuous(rawCapture, format = "bgr", use_video_port = True):
+    image = frame.array
+    key = cv2.waitKey(1) & 0xFF
+    rawCapture.truncate(0)
+    image = preprocess_image(image)
     result = model.predict(image)
-    ser.write(result)
-    print(result)
+    transmit(result)
+    #print(result)
     sleep(0.02)
     if key == ord("q"):
         break
