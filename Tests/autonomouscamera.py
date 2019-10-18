@@ -4,7 +4,7 @@ import time
 import cv2
 
 camera = PiCamera()
-camera.vflip = True
+
 camera.resolution = (300, 100)
 camera.framerate = 10
 rawCapture = PiRGBArray(camera, size = (300, 100))
@@ -20,5 +20,5 @@ for frame in camera.capture_continuous(rawCapture, format = "bgr", use_video_por
     rawCapture.truncate(0)
     time.sleep(0.02)
     print("h")
-    if key == ord("q"):s
+    if key == ord("q"):
         break

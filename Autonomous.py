@@ -69,7 +69,7 @@ for frame in camera.capture_continuous(rawCapture, format = "bgr", use_video_por
     result = model.predict(image)
     transmit(result)
     #print(result)
-    sleep(0.02)
+    sleep(0.08)
     if key == ord("q"):
         break
     
