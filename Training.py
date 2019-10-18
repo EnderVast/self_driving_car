@@ -44,7 +44,6 @@ print('Press button to start recording training data')
 camera = picamera.PiCamera()
 camera.resolution = (300, 100)
 camera.framerate = 5
-camera.vflip = True
 
 sleep(2)
 
@@ -97,8 +96,8 @@ while(True):
             os.chdir(current_dir)
             with open('img_dir.csv', 'a') as imgdir:
                 csv_writer = csv.writer(imgdir)
+                os.remove(img_dir[0])
                 for i in range(1, len(img_dir)):    #start from 1 because apparently first data steering angle always 0
-                    os.remove(img_dir[0])
                     csv_data = []
                     csv_data.append(img_dir[i])
                     csv_data.append(steering_angles[i])
