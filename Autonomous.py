@@ -13,7 +13,6 @@ import os
 buttonPin = 16
 
 camera = PiCamera()
-camera.vflip = True
 camera.resolution = (300, 100)
 camera.framerate = 10
 rawCapture = PiRGBArray(camera, size = (300, 100))

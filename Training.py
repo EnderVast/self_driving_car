@@ -45,7 +45,7 @@ camera = picamera.PiCamera()
 camera.resolution = (300, 100)
 camera.framerate = 5
 
-sleep(2)
+sleep(1)
 
 def record_data():
     i = 0
