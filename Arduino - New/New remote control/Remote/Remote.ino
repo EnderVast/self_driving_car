@@ -8,6 +8,7 @@
 #define POT A2
 #define LED 6
 
+
 #include <SPI.h>  
 #include "RF24.h"
 
@@ -25,6 +26,10 @@ typedef struct package
 }package;
 
 package data;
+
+unsigned long previousTime = millis();
+int interval = 250;
+bool ledState;
 
 void setup() {  
   //Stating buttons are inputs
@@ -54,11 +59,12 @@ void loop() {
 void checkSignal()
 {
   int counter = 0;
-  data.connection = 3;
+  bool goodSignal = false;
+  data.connection = 3;  //request for signal check
   myRadio.write(&data, sizeof(data));
   unsigned long currentTime = millis();
   unsigned long duration = currentTime + 200;
-  while(currentTime < duration)  //wait for reply for 0.4 seconds
+  while(currentTime < duration)  //wait for reply for 0.2 seconds
   {
     if (counter == 0) //switch to listening mode once
     {
@@ -70,15 +76,16 @@ void checkSignal()
     if (data.connection == 1)
     {
       signalStatus(true);
+      goodSignal = true;
       Serial.println("good");
     }
-    else 
+    currentTime = millis();
+  }
+  if (!goodSignal) 
     {
       signalStatus(false);
       Serial.println("bad");
     }
-    currentTime = millis()/1000;
-  }
   myRadio.stopListening();
   myRadio.openWritingPipe(addresses[0]);
 }
@@ -87,23 +94,25 @@ void signalStatus(bool goodConnect)
 {
   if (goodConnect == true)
   {
-    digitalWrite(LED, HIGH);
+    ledState = HIGH;
   }
   else
   {
-    unsigned long timer = millis()/1000;
-    int duration = timer + 0.5;
-    if (timer > duration)
+    unsigned long currentTime = millis();
+    if (currentTime - previousTime > interval)
     {
-      digitalWrite(LED, HIGH);
-      timer = millis()/1000;
-    }
-    if (timer > duration)
-    {
-      digitalWrite(LED, LOW);
-      timer = millis()/1000;
+      if(ledState == LOW)
+      {
+        ledState = HIGH;
+      }
+      else
+      {
+        ledState = LOW;
+      }
+      previousTime = currentTime;
     }
   }
+  digitalWrite(LED, ledState);
 }
 
 void inputs()

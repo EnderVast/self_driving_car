@@ -32,23 +32,23 @@ void loop() {
   {
     myRadio.read(&data, sizeof(data));
   }
-  
+  Serial.println(data.connection);
   if (data.connection == 3)
   {
     checkSignal();
   }
-//  Serial.println(data.joy_x);
-//  Serial.println(data.joy_y);
-//  Serial.println(data.pot);
-//  Serial.println(data.button);
-//  Serial.println(data.top_button);
-  Serial.println(data.connection);
+  Serial.println(data.joy_x);
+  Serial.println(data.joy_y);
+  Serial.println(data.pot);
+  Serial.println(data.button);
+  Serial.println(data.top_button);
+  //Serial.println(data.connection);
 }
 
 void checkSignal()
 {
   unsigned long currentTime = millis();
-  unsigned long duration = currentTime + 200;
+  unsigned long duration = currentTime + 100;
   myRadio.stopListening();
   myRadio.openWritingPipe(addresses[0]);
   while(currentTime < duration)
