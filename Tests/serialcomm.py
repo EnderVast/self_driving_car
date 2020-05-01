@@ -40,6 +40,7 @@ while(True):
         incoming_data = ord(ser.read())         
         steering_angles.append(incoming_data)
         print('Steering angle: ', incoming_data)
+        ser.reset_input_buffer()
             
         
         
