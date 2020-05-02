@@ -17,7 +17,7 @@ camera.resolution = (300, 100)
 camera.framerate = 10
 rawCapture = PiRGBArray(camera, size = (300, 100))
 
-model = load_model("model2.h5")
+model = load_model("model.h5")
 
 address = '/dev/ttyUSB'
 
