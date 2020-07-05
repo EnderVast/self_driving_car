@@ -74,7 +74,9 @@ try:
     os.mkdir(current_dir + '/data/recorded_images')
     os.chdir(current_dir + '/data')
     current_dir = os.getcwd()
+    
 
+#There is existing data
 except:
     os.chdir(current_dir + '/data')
     current_dir = os.getcwd()
