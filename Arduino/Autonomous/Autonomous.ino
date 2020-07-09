@@ -1,4 +1,4 @@
-#include <LiquidCrystal_I2C.h>
+
 #include <Servo.h>
 #include <Wire.h> 
 
