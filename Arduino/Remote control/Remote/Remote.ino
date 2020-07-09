@@ -11,8 +11,14 @@
 
 #include <SPI.h>  
 #include "RF24.h"
+#include <LiquidCrystal_I2C.h>
+#include <Wire.h>
+
 
 RF24 myRadio (7, 8);
+LiquidCrystal_I2C lcd(0x27, 16, 2);
+
+
 byte addresses[][6] = {"0"};
 
 typedef struct package
@@ -48,6 +54,15 @@ void setup() {
   myRadio.setPALevel(RF24_PA_MAX);
   myRadio.setDataRate( RF24_250KBPS ) ; 
   myRadio.openWritingPipe(addresses[0]);
+
+  //LCD
+  lcd.init();
+  lcd.backlight();
+  lcd.setCursor(0,0);
+  lcd.print("Initializing...");
+  delay(1000);
+  lcd.clear();
+  lcd.noBacklight();
 }
 
 void loop() {
